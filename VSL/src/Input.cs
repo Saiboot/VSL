@@ -27,7 +27,7 @@ namespace VSL.Input
         {
             m_Keyboard = new KeyboardState();
             m_Mouse = new MouseState();
-            m_MouseButton = new ButtonState[3];
+            m_MouseButton = new ButtonState[5];
         }
 
         /// <summary>
