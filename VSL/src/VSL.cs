@@ -7,15 +7,19 @@ namespace VSL
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class VSL : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        // Monogame utilities
+        GraphicsDeviceManager g_Graphics;
+        SpriteBatch g_SpriteBatch;
 
-        public Game1()
+        // VSL utilities
+        Input.InputModule g_Input;
+
+        public VSL()
         {
-            graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+            g_Graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "resources";
         }
 
         /// <summary>
@@ -29,6 +33,7 @@ namespace VSL
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            g_Input = new Input.InputModule();
         }
 
         /// <summary>
@@ -38,7 +43,7 @@ namespace VSL
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            g_SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
         }
@@ -65,6 +70,7 @@ namespace VSL
             // TODO: Add your update logic here
 
             base.Update(gameTime);
+            g_Input.Pull_Events();
         }
 
         /// <summary>

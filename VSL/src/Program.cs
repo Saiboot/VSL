@@ -1,5 +1,9 @@
 ﻿using System;
 
+/****
+ *   Don't touch this file unless you absolutely need to. 
+ ******/
+
 namespace VSL
 {
 #if WINDOWS || LINUX
@@ -14,7 +18,7 @@ namespace VSL
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
+            using (var game = new VSL())
                 game.Run();
         }
     }
