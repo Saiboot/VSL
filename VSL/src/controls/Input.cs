@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace VSL.Input
+namespace VSL.Controls
 {
     /// <summary>
     /// Defines a accessible mouse button.
@@ -56,7 +56,7 @@ namespace VSL.Input
         /// <returns>Current state of Key</returns>
         public bool KeyState(Keys key)
         {
-            return m_Keyboard.IsKeyDown(key) ? true : false;
+            return m_Keyboard.IsKeyDown(key);
         }
 
         /// <summary>
@@ -72,10 +72,10 @@ namespace VSL.Input
         }
 
         /// <summary>
-        ///     Fetch whether or not a specific mouse Key is being pressed.
+        ///     Check whether or not a specific mouse Key is being pressed.
         /// </summary>
         /// <param name="button">VSL Mouse button index</param>
-        /// <returns>Current state of Key</returns>
+        /// <returns>Current state of Button</returns>
         public bool MouseButtonState(MouseButton button)
         {
             return m_MouseButton[(int)button] == ButtonState.Pressed ? true : false;     
