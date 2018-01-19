@@ -9,17 +9,23 @@ namespace VSL
     /// </summary>
     public class VSL : Game
     {
+        public Vector2 ScreenCenter { get { return new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2); } }
+
         // Monogame utilities
         GraphicsDeviceManager g_Graphics;
         SpriteBatch g_SpriteBatch;
 
+        Context.Entity e;
+
         // VSL utilities
-        Input.InputModule g_Input;
+        Controls.InputModule g_Input;
+
+        Context.Globe Ball;
 
         public VSL()
         {
             g_Graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "resources";
+            Content.RootDirectory = "Content";
         }
 
         /// <summary>
@@ -31,7 +37,8 @@ namespace VSL
         protected override void Initialize()
         {
             base.Initialize();
-            g_Input = new Input.InputModule();
+            g_Input = new Controls.InputModule();
+            
         }
 
         /// <summary>
@@ -41,6 +48,7 @@ namespace VSL
         protected override void LoadContent()
         {
             g_SpriteBatch = new SpriteBatch(GraphicsDevice);
+            Ball = new Context.Globe(Content, "ball", ScreenCenter, new Context.Handle(Content, "chain", ScreenCenter - new Vector2(10, 10), 250));
         }
 
         /// <summary>
@@ -49,7 +57,7 @@ namespace VSL
         /// </summary>
         protected override void UnloadContent()
         {
-
+            Content.Unload();
         }
 
         /// <summary>
@@ -59,10 +67,17 @@ namespace VSL
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-            base.Update(gameTime);
             g_Input.Pull_Events();
+            if (g_Input.KeyState(Keys.Escape))
+                Exit();
+
+            for (int i = 0; i < Context.Entity.Collection.Count; i++)
+                Context.Entity.Collection[i].Update(gameTime);
+
+           
+            Ball.m_Handle.setPos(g_Input.MousePos().ToVector2());
+
+            base.Update(gameTime);
         }
 
         /// <summary>
@@ -72,6 +87,9 @@ namespace VSL
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            for (int i = 0; i < Context.Entity.Collection.Count; i++)
+                Context.Entity.Collection[i].Draw(g_SpriteBatch);
 
             base.Draw(gameTime);
         }
